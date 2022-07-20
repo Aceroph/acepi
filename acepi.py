@@ -1,5 +1,3 @@
-# /!\ REQUIRES PYTHON 3.6
-
 import os
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
@@ -18,14 +16,14 @@ class DeepLearning:
     def __init__(self):
         pass
 
-    def intents(file: str):
-        with open(file) as file:
+    def intents(filepath: str):
+        with open(filepath) as file:
             data = json.load(file)
             return data
 
-    def vocabulary(datajson, file: str):
+    def vocabulary(datajson, picklefilepath: str):
         try:
-            with open(file, "rb") as f:
+            with open(picklefilepath, "rb") as f:
                 words, labels, training, output = pickle.load(f)
         except:
             words = []
@@ -73,7 +71,7 @@ class DeepLearning:
             training = numpy.array(training)
             output = numpy.array(output)
             
-            with open(file, "wb") as f:
+            with open(picklefilepath, "wb") as f:
                 pickle.dump((words, labels, training, output), f)
         
         return words, labels, training, output
@@ -124,4 +122,4 @@ class DeepLearning:
 
     def accuracy(model: tflearn.DNN, test_x, test_y):
         score = model.evaluate(test_x, test_y)
-        return 'Test accuracy: %0.4f%%' % (score[0] * 100)
+        return '%0.4f%%' % (score[0] * 100)
